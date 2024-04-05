@@ -11,7 +11,7 @@ import pandas as pd
 
 # Load the my_df dataset from the csv in the folder
 # Try reading the CSV file with different encodings
-my_df = pd.read_csv('Assignment3/ProcessedTweets.csv', encoding='latin1')
+my_df = pd.read_csv('ProcessedTweets.csv', encoding='latin1')
 
 
 model_pipeline=None
