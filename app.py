@@ -16,28 +16,33 @@ my_df = pd.read_csv('ProcessedTweets.csv', encoding='latin1')
 
 model_pipeline=None
 
-
-# continent_dropdown = html.Div(className="dropdown2_div",children=[html.P("Select Continent: "),dcc.Dropdown(id='ctry_dropdown',options=cont_list, value=None,style=dict(width=150,marginLeft=2))])
+month_list = ["April", "May", "June"]
+month_dropdown = html.Div(className="dropdown_div",children=[html.P("Select Month: "),dcc.Dropdown(id='mth_dropdown',options=month_list, value=None,style=dict(width=150,marginLeft=2))])
 # radio_items=dcc.RadioItems(id='cat_radio_items_id',options=categorical_columns, value=None,inline=True)
 
-num_buckets_slider = html.Div(className="slider_parent",children=[html.P("Approx. Num Buckets"),dcc.Slider(id='bucket_slider', min=2, max=20, value=10, step=1)])
-
-#radio items for filter
-filter_list = ['All', 10, 20, 30]
-filter_radio = html.Div(className="fil_radio", children=[html.P("Num elements displayed: "),dcc.RadioItems(id='radio_itm', options=filter_list, value='All', inline=True)])
-
-#dropdown for criteria
-# criteria_list = ['Human Development Index (HDI)', 'Life expectancy at birth', 'Gross national income (GNI) per capita']
-# criteria_dropdown = html.Div(className="crit_drop",children=[html.P("Select Criteria: "),dcc.Dropdown(id='criteria_dropdown',options=criteria_list, value=None,style=dict(width=300,marginLeft=2))])
+sentiment_slider = html.Div(className="slider_sentiment", children=[dcc.RangeSlider(
+        id='my-range-slider',
+        min=-1,
+        max=1,
+        step=0.1,
+        marks={i: str(i) for i in range(-1, 2)},
+        value=[-1, 1]  # Initial values for the range slider
+    ),
+    html.Div(id='slider-output')])
 
 app = dash.Dash(__name__)
 server = app.server
 
 
+
 #### layout
 app.layout = html.Div(className="parent_container", children=[
-    #row one holds the title
-    html.Div("Countries and Quality of Life", id="row1"),
+    #row one holds the inputs
+    html.Div(id="row1", children=[
+        month_dropdown,
+        sentiment_slider,
+
+    ]),
 
     #row 2 holds the two graphs and their interactive components
     html.Div(id="row2", children=[
@@ -48,7 +53,6 @@ app.layout = html.Div(className="parent_container", children=[
         ]),
         #graph 2: histogram of GNI
         html.Div(className="row2_child2", children=[
-            num_buckets_slider,
             html.Div(dcc.Graph(id='graph2'),style=dict(width="100%"))
         ])
     ]),

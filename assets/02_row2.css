@@ -30,9 +30,9 @@
     
 }
 
-.dropdown2_div, .fil_radio, .crit_drop {
+.dropdown_div {
     display: flex;
-    justify-content:center;
+    align-items: center;
     flex-direction: row;
 }
 
