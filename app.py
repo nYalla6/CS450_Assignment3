@@ -7,6 +7,8 @@ import plotly.express as px
 
 
 app = dash.Dash(__name__)
+server = app.server
+
 tweets_df = pd.read_csv('ProcessedTweets.csv')
 
 # Define the layout of the app
